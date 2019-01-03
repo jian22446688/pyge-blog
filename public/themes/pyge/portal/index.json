@@ -1,0 +1,134 @@
+{
+  "name": "首页",
+  "action": "portal/Index/index",
+  "description": "首页模板文件",
+  "order": 5.0,
+  "more": {
+    "vars": {
+      "home_carousel" : {
+        "title": "主页欢迎灯片",
+        "value": "1",
+        "type": "text",
+        "tip": "请选择主页幻灯片",
+        "dataSource":{
+          "api": "admin/Slide/index",
+          "multi": false
+        },
+        "rule": {
+          "require": true
+        },
+        "message":{
+          "require":"不能为空"
+        }
+      },
+      "home_news" : {
+        "title": "首页推荐",
+        "value": "1",
+        "type": "number",
+        "tip": "请输入需要显示推荐的数量"
+      },
+      "home_dashang_wechat" : {
+        "title": "微信",
+        "value": "",
+        "type": "image",
+        "tip": "请选择微信收款码"
+      },
+      "home_dashang_zhifubao" : {
+        "title": "支付宝",
+        "value": "",
+        "type": "image",
+        "tip": "请选择支付宝收款码"
+      },
+      "home_dashang_array" : {
+        "title": "收到的打赏数组",
+        "value": "",
+        "type": "array",
+        "item": {
+          "name" : {
+            "title": "打赏者名字",
+            "value": "",
+            "type": "text",
+            "tip": "请填写打赏者名字"
+          },
+          "money" : {
+            "title": "打赏的钱",
+            "value": "",
+            "type": "text",
+            "tip": "请填写打赏打赏的钱数"
+          },
+          "type" : {
+            "title": "打赏类型",
+            "value": "支付宝",
+            "type": "select",
+            "options": {
+              "微信": "微信",
+              "支付宝": "支付宝"
+            },
+            "tip": "请填写打赏者名字"
+          }
+        },
+        "tip": "请添加收到的用户"
+      }
+    },
+    "widgets": {
+      "home_adver": {
+        "title": "右边广告页面",
+        "name": "adver_widget",
+        "display": "1",
+        "vars": {
+          "title": {
+            "title": "广告标题",
+            "value": "",
+            "type": "text",
+            "tip": "请输入广告标题"
+          },
+          "url": {
+            "title": "广告连接",
+            "value": "",
+            "type": "text",
+            "tip": "请输入广告连接",
+            "rule": {
+              "require": true
+            }
+          },
+          "img": {
+            "title": "广告图片",
+            "value": "",
+            "type": "image",
+            "tip": "请选择广告图片",
+            "rule": {
+              "require": true
+            }
+          }
+        }
+      },
+      "home_article_recommend": {
+        "title": "最新资讯",
+        "display": "1",
+        "vars": {
+          "article_title" : {
+            "title": "首页资讯标题",
+            "value": "最新资讯",
+            "type": "text",
+            "tip": "请输入首页资讯标题"
+          },
+          "categorys": {
+            "title": "文章分类ID",
+            "value": "1",
+            "type": "text",
+            "dataSource":{
+              "api": "portal/category/index",
+              "multi": true
+            },
+            "rule": {
+              "require": true
+            },
+            "message":{
+              "require":"不能为空"
+            }
+          }
+        }
+      }
+    }
+  }
+}

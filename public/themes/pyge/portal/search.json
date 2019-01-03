@@ -1,0 +1,29 @@
+{
+  "name": "搜索页面",
+  "action": "portal/search/index",
+  "description": "搜索模板文件",
+  "order": 40.0,
+  "more": {
+    "vars": {
+      "varName1": {
+        "title": "热门搜索",
+        "value": "1",
+        "type": "text",
+        "tip": "这是一个text",
+        "rule": {
+          "require": true
+        }
+      },
+      "pagination_count": {
+        "title": "列表页面加载数量",
+        "value": "10",
+        "type": "text",
+        "placeholder": "请输入列表页面加载数量",
+        "tip": "",
+        "rule": {
+          "require": true
+        }
+      }
+    }
+  }
+}

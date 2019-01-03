@@ -1,0 +1,38 @@
+{
+    "name": "热门文章",
+    "action": "public/side_article_hot",
+    "description": "热门文章模板文件",
+    "is_public": "1",
+    "order": 60.0,
+    "more": {
+        "vars": {  },
+        "widgets": {
+            "article_hot": {
+                "title": "热门文章",
+                "name": "article_hot_widget",
+                "display": "1",
+                "vars": {
+                    "article_count": {
+                        "title": "标签数量",
+                        "value": "3",
+                        "type": "text",
+                        "tip": "请输入标签数量"
+                    },
+                    "article_ids": {
+                        "title": "热门文章ids",
+                        "value": "1",
+                        "type": "text",
+                        "tip": "请输入热门文章云ids",
+                        "dataSource":{
+                            "api": "portal/category/index",
+                            "multi": true
+                        },
+                        "rule": {
+                            "require": true
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

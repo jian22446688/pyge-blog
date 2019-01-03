@@ -1,0 +1,24 @@
+<notempty name="$theme_widgets['adver']">
+    <widget name="adver">
+        <!--输出控件标题-->
+        <notempty name="$widget.vars['advertisings']">
+            <div class="widget widget_sentence" style="position: relative;">
+                <div style="
+                 border: 1px solid #fff;
+                 position:absolute;
+                 padding: 2px;
+                 font-size: 6px;
+                 color: #fff;
+                 top: 0">广告</div>
+                <php>
+                    $advertis = $widget['vars']['advertisings'];
+                    $adver = $advertis[rand(0, count($advertis)-1)];
+                </php>
+                <a href="{$adver['url']}"
+                   target="_blank" rel="nofollow" title="{$adver['title']}">
+                    <img style="width: 100%" src="{$adver['img']|cmf_get_image_url}" alt="#">
+                </a>
+            </div>
+        </notempty>
+    </widget>
+</notempty>

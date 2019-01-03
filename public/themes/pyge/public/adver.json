@@ -1,0 +1,53 @@
+{
+    "name": "通用右边广告页面",
+    "action": "public/adver",
+    "description": "通用右边广告页面模板文件",
+    "is_public": "1",
+    "order": 20.0,
+    "more": {
+        "vars": {
+
+        },
+        "widgets": {
+            "adver": {
+                "title": "通用右边广告页面",
+                "name": "adver_widget",
+                "display": "1",
+                "vars": {
+                    "advertisings": {
+                        "title": "广告标题",
+                        "value": "",
+                        "type": "array",
+                        "tip": "请输入广告标题",
+                        "item": {
+                            "title": {
+                                "title": "广告标题",
+                                "value": "",
+                                "type": "text",
+                                "tip": "请输入广告标题"
+                            },
+                            "url": {
+                                "title": "广告连接",
+                                "value": "",
+                                "type": "text",
+                                "tip": "请输入广告连接",
+                                "rule": {
+                                    "require": true
+                                }
+                            },
+                            "img": {
+                                "title": "广告图片",
+                                "value": "",
+                                "type": "image",
+                                "tip": "请选择广告图片最佳400x180",
+                                "rule": {
+                                    "require": true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

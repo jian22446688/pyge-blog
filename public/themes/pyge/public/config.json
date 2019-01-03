@@ -1,0 +1,34 @@
+{
+    "name": "模板全局配置",
+    "action": "public/Config",
+    "description": "模板全局配置文件",
+    "is_public": "1",
+    "order": 0.0,
+    "more": {
+        "vars": {
+            "enable_mobile": {
+                "title": "手机注册",
+                "value": "ThinkCMF",
+                "type": "select",
+                "value": 1,
+                "options": {
+                    "1": "开启",
+                    "0": "关闭"
+                },
+                "tip": ""
+            },
+            "gl_article_count_base_num": {
+                "title": "所有文章查看系数",
+                "value": 1,
+                "type": "number",
+                "tip": "请输入所有文章查看系数",
+                "rule": {
+                    "require": true
+                },
+                "message":{
+                    "require":"章查看系数"
+                }
+            }
+        }
+    }
+}

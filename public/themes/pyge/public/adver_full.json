@@ -1,0 +1,53 @@
+{
+    "name": "全屏广告",
+    "action": "public/adver_full",
+    "description": "全屏广告模板文件",
+    "is_public": "1",
+    "order": 10.0,
+    "more": {
+        "vars": {
+
+        },
+        "widgets": {
+            "adver_full": {
+                "title": "全屏广告页面",
+                "name": "adver_full_widget",
+                "display": "1",
+                "vars": {
+                    "advertisings": {
+                        "title": "广告标题",
+                        "value": "",
+                        "type": "array",
+                        "tip": "请输入广告标题",
+                        "item": {
+                            "title": {
+                                "title": "广告标题",
+                                "value": "",
+                                "type": "text",
+                                "tip": "请输入广告标题"
+                            },
+                            "url": {
+                                "title": "广告连接",
+                                "value": "",
+                                "type": "text",
+                                "tip": "请输入广告连接",
+                                "rule": {
+                                    "require": true
+                                }
+                            },
+                            "img": {
+                                "title": "广告图片",
+                                "value": "",
+                                "type": "image",
+                                "tip": "请选择广告图片",
+                                "rule": {
+                                    "require": true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

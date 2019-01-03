@@ -1,0 +1,53 @@
+{
+    "name": "文章2列表页",
+    "action": "portal/List/index",
+    "description": "文章2列表页模板文件",
+    "order": 15.0,
+    "more": {
+        "vars": {
+            "pagination_count": {
+                "title": "列表页面加载数量",
+                "value": "10",
+                "type": "text",
+                "placeholder": "请输入列表页面加载数量",
+                "tip": "",
+                "rule": {
+                    "require": true
+                }
+            }
+        },
+        "widgets": {
+            "template_recommend": {
+                "title": "推荐文章",
+                "display": "1",
+                "vars": {
+                    "count": {
+                        "title": "推荐数量",
+                        "value": "6",
+                        "type": "text",
+                        "tip": "推荐数量",
+                        "rule": {
+                            "require": true
+                        }
+                    },
+                    "categorys": {
+                        "title": "文章分类ID",
+                        "value": "1",
+                        "type": "text",
+                        "dataSource": {
+                            "api": "portal/category/index",
+                            "multi": true
+                        },
+                        "rule": {
+                            "require": true
+                        },
+                        "message":{
+                            "require":"最新文章不能为空"
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <title>{$page.post_title|default=$site_info.site_name}-{$site_info.site_name}</title>
+    <meta name="keywords" content="{$page.post_keywords|default=$site_info.site_seo_keywords}"/>
+    <meta name="description" content="{$page.post_excerpt|default=$site_info.site_seo_description}"/>
+    <include file="public@head"/>
+</head>
+
+<body>
+
+<include file="public@nav"/>
+
+
+<section class="container cc-to-top-80px">
+    <div class="content-wrap">
+        <div class="content-full">
+            <header class="article-header" >
+                <h1 class="article-title"><a href="#" title="{$page.post_title|default=''}">{$page.post_title|default=''}</a></h1>
+                <div class="article-meta">
+                    <span class="item article-meta-time">
+                        <time class="time"
+                              data-toggle="tooltip"
+                              data-placement="bottom" title="{$page.post_title|default=''}"
+                              data-original-title="发表时间：{:date('Y-m-d',$page.create_time)}"><i
+                                    class="glyphicon glyphicon-time"></i> {:date("Y-m-d",$page.create_time)}</time>
+						</span>
+                    <span class="item article-meta-source"
+                          data-toggle="tooltip"
+                          data-placement="bottom" title=""
+                                      data-original-title="来源：{$page.post_source}">
+                        <i class="glyphicon glyphicon-globe"></i> {$page.post_source|default=$site_info.site_name}
+                    </span>
+                    <span class="item article-meta-views" data-toggle="tooltip"
+                          data-placement="bottom" title="" data-original-title="浏览量：{$page.post_hits*$theme_vars['gl_article_count_base_num']}">
+                        <i class="glyphicon glyphicon-eye-open"></i> {$page.post_hits*$theme_vars['gl_article_count_base_num']}
+                    </span>
+                    <span class="item article-meta-comment" data-toggle="tooltip" data-placement="bottom" title=""
+                          data-original-title="评论量"><i class="glyphicon glyphicon-comment"></i> {$page.comment_count}
+                    </span>
+                </div>
+            </header>
+            <article class="article-content">
+
+                {$page.post_content|default='暂无内容'}
+                <notempty name="$theme_widgets['page_full_share']">
+                    <widget name="page_full_share">
+                        <div class="bdsharebuttonbox">
+                            <a href="#" class="bds_more" data-cmd="more"></a>
+                            <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                            <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                            <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+                            <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                            <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+                            <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+                        </div>
+                        <script>
+                            window._bd_share_config = {
+                                "common": {
+                                    "bdSnsKey": {},
+                                    "bdText": "",
+                                    "bdMini": "2",
+                                    "bdMiniList": false,
+                                    "bdPic": "",
+                                    "bdStyle": "1",
+                                    "bdSize": "32"
+                                },
+                                "share": {}
+                            };
+                            with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=0.js?cdnversion=' + ~(-new Date() / 36e5)];
+                        </script>
+                    </widget>
+                </notempty>
+            </article>
+
+            <notempty name="$page.post_keywords">
+                <div class="article-tags">
+                    标签：
+                        <php>
+                            $tags = explode(',',  $page['post_keywords']);
+                        </php>
+                        <volist name="$tags" id="v">
+                            <a href="javascript:" rel="tag">{$v}</a>
+                        </volist>
+                </div>
+            </notempty>
+
+            <notempty name="$theme_widgets['page_full_recommend']">
+                <widget name="page_full_recommend">
+                    <div class="relates">
+                        <div class="title">
+                            <h3>{$widget.title}</h3>
+                        </div>
+                        <div class="cc-cutoffrule"></div>
+                        <ul>
+                            <volist name="$widget.vars.category_id" id="item">
+                                <portal:articles limit="$item.count" order="post.published_time DESC"
+                                                 categoryIds="$item.category">
+                                    <li><a href="{:cmf_url('portal/Article/index',['id'=>$vo.id, 'cid'=>$item.category])}"
+                                           title="">{$vo.post_title}</a></li>
+                                </portal:articles>
+                            </volist>
+                        </ul>
+                    </div>
+
+                </widget>
+            </notempty>
+
+        </div>
+
+    </div>
+    <include file="public@adver_full" />
+</section>
+
+<!--footer-->
+<include file="public@footer" />
+
+<include file="public@scripts"/>
+</body>
+
+</html>

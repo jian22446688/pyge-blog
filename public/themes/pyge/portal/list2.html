@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <title>{$category.name} {$category.seo_title} {$site_info.site_name|default=''}</title>
+    <meta name="keywords" content="{$category.seo_keywords},{$site_info.site_seo_keywords|default=''}"/>
+    <meta name="description" content="{$category.seo_description},{$site_info.site_seo_description|default=''}">
+    <include file="public@head"/>
+</head>
+
+<body>
+
+<include file="public@nav"/>
+
+<div class="container cc-to-top-80px">
+    <php>$_cates= \app\portal\service\ApiService::allSubCategories($category['id']);</php>
+    <egt name=":count($_cates)" value="1">
+        <div class="content-full" style="min-height: auto">
+            <div class="cc-category-warp clearfix">
+                <div class="category-r-title pull-left">全部分类：</div>
+                <ul class="category-options clearfix">
+                    <volist name="$_cates" id="vo">
+                        <egt name="$vo.post_count" value="1">
+                            <li>
+                                <a href="{:url('portal/List/index',array('id'=>$vo.id))}">{$vo.name}
+                                    <span class="badge">{$vo.post_count}</span></a>
+                            </li>
+                            <else/>
+                            <li>
+                                <a href="#">{$vo.name}
+                                    <span class="badge">{$vo.post_count}</span></a>
+                            </li>
+                        </egt>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+    </egt>
+
+    <!--内容列表-->
+    <section class="container">
+        <div class="content-wrap">
+            <div class="row">
+                <div class="col-md-12 title">
+                    <h3>{$category.name}</h3>
+                </div>
+                <php>
+                    $page=[ 'list_rows'=>$theme_vars['pagination_count'], 'next'=>'下一页', 'prev'=>'上一页' ];
+                </php>
+                <portal:articles page="$page"
+                                 categoryIds="$category.id"
+                                 order="post.published_time DESC">
+                    <div class="col-md-6 cc-margin-10 excerpt-item ">
+                        <!--文章列表-->
+                        <article class="excerpt" style="">
+                            <a class="focus" href="{:cmf_url('portal/Article/index',['id'=>$vo.id, 'cid'=>$category.id])}" title="{$vo.post_title}" target="_blank">
+                                <empty name="vo.thumbnail">
+                                    <img class="thumb" src="__TMPL__/public/assets/images/occupying.png"
+                                         alt="{$vo.post_title}" style="display: inline;">
+                                    <else/>
+                                    <img class="thumb" src="{:cmf_get_image_url($vo.thumbnail)}"
+                                         alt="{$vo.post_title}" style="display: inline;">
+                                </empty>
+                            </a>
+                            <header>
+                                <h2>
+                                    <a href="{:cmf_url('portal/Article/index',['id'=>$vo.id, 'cid'=>$category.id])}" title="{$vo.post_title}" target="_blank">{$vo.post_title}</a>
+                                </h2>
+                            </header>
+                            <p class="meta">
+                                <time class="time"><i class="glyphicon glyphicon-time"></i> {:date("Y-m-d",$vo.create_time)}</time>
+                                <span class="views"><i class="glyphicon glyphicon-eye-open"></i> {$vo.post_hits}</span>
+                                <span class="comment"><i class="glyphicon glyphicon-thumbs-up"></i> {$vo.post_like}</span>
+                                <span class="comment"><i class="glyphicon glyphicon-comment"></i> {$vo.comment_count}</span>
+                            </p>
+                            <p class="note">{$vo.post_excerpt}</p>
+                        </article>
+
+                        <ul class="pagination" style="display: none;">
+                            <page/>
+                        </ul>
+                    </div>
+                </portal:articles>
+                <include file="public@adver_full" />
+            </div>
+        </div>
+    </section>
+
+</div>
+
+
+<!--footer-->
+<include file="public@footer" />
+
+
+<include file="public@scripts"/>
+
+
+<script>
+    // next: '.pagination li:last',
+    jQuery.ias({
+        history: false,
+        container: '.row',
+        item: '.excerpt-item',
+        pagination: '.pagination',
+        next: '.pagination li:last a',
+        trigger: '查看更多',
+        loader: '<div class="pagination-loading"><img src="__TMPL__/public/assets/images/loading.gif" /></div>',
+        triggerPageThreshold: 5,
+        onRenderComplete: function (er) {
+            console.log('d', er)
+            $('.excerpt .thumb').lazyload({
+                placeholder: '__TMPL__/public/assets/images/occupying.png',
+                threshold: 300
+            });
+            $('.excerpt img').attr('draggable', 'false');
+            $('.excerpt a').attr('draggable', 'false')
+        },
+        onPageChange: function (pageNum, pageUrl, scrollOffset) {
+            console.log(pageNum);
+        }
+    });
+
+</script>
+
+</body>
+
+</html>

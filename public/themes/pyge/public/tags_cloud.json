@@ -1,0 +1,40 @@
+{
+    "name": "导航条",
+    "action": "public/Nav",
+    "description": "导航条模板文件",
+    "is_public": "1",
+    "order": 1.0,
+    "more": {
+        "vars": {
+
+        },
+        "widgets": {
+            "tags_cloud": {
+                "title": "标签云",
+                "name": "tags_cloud_widget",
+                "display": "1",
+                "vars": {
+                    "tag_count": {
+                        "title": "标签数量",
+                        "value": "8",
+                        "type": "text",
+                        "tip": "请输入标签数量"
+                    },
+                    "tags_id": {
+                        "title": "标签云id",
+                        "value": "1",
+                        "type": "text",
+                        "tip": "请输入标签云id",
+                        "dataSource":{
+                            "api": "portal/category/index",
+                            "multi": false
+                        },
+                        "rule": {
+                            "require": true
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

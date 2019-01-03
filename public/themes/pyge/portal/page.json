@@ -1,0 +1,81 @@
+{
+    "name": "单页面",
+    "action": "portal/Page/index",
+    "description": "单页面模板文件",
+    "order": 10.0,
+    "more": {
+        "widgets":{
+            "page_share": {
+                "title": "文章内容分享",
+                "display": "1",
+                "vars": {
+                }
+            },
+            "page_nav_recommend": {
+                "title": "最新文章",
+                "display": "1",
+                "vars": {
+                    "count": {
+                        "title": "推荐数量",
+                        "value": "3",
+                        "type": "text",
+                        "tip": "推荐数量",
+                        "rule": {
+                            "require": true
+                        }
+                    },
+                    "category_id": {
+                        "title": "文章分类ID",
+                        "value": "1",
+                        "type": "text",
+                        "dataSource": {
+                            "api": "portal/category/index",
+                            "multi": true
+                        },
+                        "rule": {
+                            "require": true
+                        },
+                        "message":{
+                            "require":"最新文章不能为空"
+                        }
+                    }
+                }
+            },
+            "page_recommend": {
+                "title": "相关推荐",
+                "display": "1",
+                "vars": {
+                    "category_id": {
+                        "title": "文章分类ID",
+                        "value": "",
+                        "type": "array",
+                        "item": {
+                            "count": {
+                                "title": "推荐数量",
+                                "value": "2",
+                                "type": "text",
+                                "tip": "这是一个测试",
+                                "rule": {
+                                    "require": true
+                                }
+                            },
+                            "category": {
+                                "title": "分类id",
+                                "value": 1,
+                                "type": "text",
+                                "dataSource": {
+                                    "api": "portal/category/index",
+                                    "multi": false
+                                },
+                                "tip": "这是一个测试",
+                                "rule": {
+                                    "require": true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

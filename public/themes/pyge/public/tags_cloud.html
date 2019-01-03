@@ -1,0 +1,30 @@
+<php>
+    $_cates= \app\portal\service\ApiService::categories('d');
+</php>
+
+<egt name=":count($_cates)" value="1">
+    <div class="widget widget_hot">
+        <h3>分类标签</h3>
+        <div class="widget-sentence-content">
+            <ul class="plinks ptags">
+                <volist name="$_cates" id="vo">
+                    <egt name="$vo.post_count" value="1">
+                        <li>
+                            <a href="{:url('portal/List/index',array('id'=>$vo.id))}"
+                               title="{$vo.name}" draggable="false">{$vo.name}
+                                <span class="badge">{$vo.post_count}</span>
+                            </a>
+                        </li>
+                        <else/>
+                        <li>
+                            <a href="javascript:"
+                               title="{$vo.name}" draggable="false">{$vo.name}
+                                <span class="badge">{$vo.post_count}</span>
+                            </a>
+                        </li>
+                    </egt>
+                </volist>
+            </ul>
+        </div>
+    </div>
+</egt>

@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <title>首页 {$site_info.site_name|default=''}</title>
+    <meta name="keywords" content="{$site_info.site_seo_keywords|default=''}"/>
+    <meta name="description" content="{$site_info.site_seo_description|default=''}">
+    <include file="public@head"/>
+</head>
+
+<body>
+
+<include file="public@nav"/>
+
+<section class="container cc-to-top-80px">
+    <div class="content-wrap">
+        <div class="content">
+            <div id="focusslide" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <php>$carouseNum = 0;</php>
+                    <slides id="$theme_vars['home_carousel']">
+                        <php>$carouseNum++;</php>
+                        <if condition="$carouseNum gt 1">
+                            <li data-target="#focusslide" data-slide-to="{$carouseNum - 1}"></li>
+                            <else/>
+                            <li data-target="#focusslide" data-slide-to="{$carouseNum - 1}" class="active"></li>
+                        </if>
+                    </slides>
+                    <noslides id="1">
+                        <li>你还没有创建幻灯片;</li>
+                    </noslides>
+                </ol>
+                <div class="carousel-inner" role="listbox">
+                    <php>$carouseNum = 0;</php>
+                    <slides id="$theme_vars['home_carousel']">
+                        <php>$carouseNum++;</php>
+                        <if condition="$carouseNum gt 1">
+                            <div class="item">
+                                <a href="{$vo.url|default='#'}" title="{$vo.title|default=''}">
+                                    <img src="{$vo.image|cmf_get_image_url}" alt="木庄网络博客源码" class="img-responsive"></a>
+                            </div>
+                            <else/>
+                            <div class="item active">
+                                <a href="{$vo.url|default='#'}" title="{$vo.title|default=''}">
+                                    <img src="{$vo.image|cmf_get_image_url}" alt="木庄网络博客源码" class="img-responsive"></a>
+                            </div>
+                        </if>
+                    </slides>
+                    <noslides id="1">
+                        <li>你还没有创建幻灯片;</li>
+                    </noslides>
+
+                </div>
+                <a class="left carousel-control" href="#focusslide" role="button" data-slide="prev" rel="nofollow">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">上一个</span>
+                </a>
+                <a class="right carousel-control" href="#focusslide" role="button" data-slide="next" rel="nofollow">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">下一个</span>
+                </a>
+            </div>
+
+            <php>
+                $home_news_count = $theme_vars['home_news'];
+                if(((int)$theme_vars['home_news']) < 1) {
+                    $home_news_count = 1;
+                }
+                $wher = 'post.is_top=1 or post.recommended=1';
+            </php>
+
+            <portal:articles limit="$home_news_count" where="$wher" order="post.published_time DESC">
+                <article class="excerpt-minic excerpt-minic-index">
+                    <h2>
+                        <if condition="$vo.is_top == 1">
+                            <span class="red">【顶置】</span>
+                        </if>
+                        <if condition="$vo.recommended == 1">
+                            <span class="blue">【推荐】</span>
+                        </if>
+                        <a target="_blank"
+                           href="{:cmf_url('portal/Article/index',array('id'=>$vo.id,'cid'=>$vo['categories'][0]['id']))}"
+                           title="{$vo.post_title}">{$vo.post_title}
+                        </a>
+                    </h2>
+                    <p class="note">{$vo.post_excerpt}</p>
+                </article>
+            </portal:articles>
+
+            <!--文章列表-->
+            <notempty name="$theme_widgets['home_article_recommend']">
+                <widget name="home_article_recommend">
+
+                    <div class="title">
+                        <h3>{$widget.vars['article_title']}</h3>
+                    </div>
+                    <php>
+                        $page=[ 'list_rows'=>10, 'next'=>'下一页', 'prev'=>'上一页' ];
+                    </php>
+                    <portal:articles page="$page"
+                                     categoryIds="$widget.vars.categorys"
+                                     order="post.published_time DESC">
+                        <article class="excerpt" style="">
+                            <a class="focus" href="{:cmf_url('portal/Article/index',['id'=>$vo.id])}" title="{$vo.post_title}" target="_blank">
+                                <empty name="vo.thumbnail">
+                                    <img class="thumb" src="__TMPL__/public/assets/images/occupying.png"
+                                         alt="{$vo.post_title}" style="display: inline;">
+                                    <else/>
+                                    <img class="thumb" src="{:cmf_get_image_url($vo.thumbnail)}"
+                                         alt="{$vo.post_title}" style="display: inline;">
+                                </empty>
+                            </a>
+                            <header>
+                                <!--<a class="cat" href="#" title="MZ-NetBlog主题">MZ-NetBlog主题<i></i></a>-->
+                                <h2>
+                                    <a href="{:cmf_url('portal/Article/index',['id'=>$vo.id])}" title="{$vo.post_title}" target="_blank">{$vo.post_title}</a>
+                                </h2>
+                            </header>
+                            <p class="meta">
+                                <time class="time"><i class="glyphicon glyphicon-time"></i> {:date("Y-m-d",$vo.create_time)}</time>
+                                <span class="views"><i class="glyphicon glyphicon-eye-open"></i> {$vo.post_hits}</span>
+                                <span class="comment"><i class="glyphicon glyphicon-thumbs-up"></i> {$vo.post_like}</span>
+                                <span class="comment"><i class="glyphicon glyphicon-comment"></i> {$vo.comment_count}</span>
+                                <!--<a class="comment" href="##comment" title="评论" target="_blank">-->
+                                <!--<i class="glyphicon glyphicon-comment"></i></a>-->
+                            </p>
+                            <p class="note">{$vo.post_excerpt}</p>
+
+                        </article>
+                    </portal:articles>
+                    <ul class="pagination" style="display: none;">
+                        <page/>
+                    </ul>
+                </widget>
+            </notempty>
+
+        </div>
+    </div>
+
+    <aside class="sidebar">
+
+       <!--首页广告-->
+        <notempty name="$theme_widgets['home_adver']">
+            <widget name="home_adver">
+                <div class="widget widget_sentence">
+                    <a href="{$widget.vars.url}" target="_blank" rel="nofollow" title="{$widget.vars.title}">
+                        <img style="width: 100%" src="{$widget.vars.img|cmf_get_image_url}" alt="$widget.vars.title">
+                    </a>
+                </div>
+            </widget>
+        </notempty>
+
+        <include file="public@tags_cloud"/>
+
+        <div class="widget">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#notice" aria-controls="notice" role="tab" data-toggle="tab">微信</a>
+                </li>
+                <li role="presentation">
+                    <a href="#contact" aria-controls="contact" role="tab" data-toggle="tab">支付宝</a>
+                </li>
+                <li style="float: right; margin-right: 16px;">
+                    <p>(请备注打赏)</p>
+                </li>
+            </ul>
+            <div class="tab-content" style="padding: 16px">
+                <div role="tabpanel" class="tab-pane contact active" id="notice">
+                    <p><img src="{$theme_vars['home_dashang_wechat']|cmf_get_image_url}" width="100%" height="100%" alt=""></p>
+                </div>
+                <div role="tabpanel" class="tab-pane contact" id="contact">
+                    <p><img src="{$theme_vars['home_dashang_zhifubao']|cmf_get_image_url}" width="100%" height="100%" alt=""></p>
+                </div>
+                <hr>
+                <ul>
+                    <volist name="$theme_vars['home_dashang_array']" id="v">
+                        <li style="margin-bottom: 6px">
+                            <a href="javascript:void(0)">{$v.name}</a>
+                            <span class="hits" style="float: right;
+                            color: #000;font-size: 14px;">{$v.type} {$v.money}元</span>
+                        </li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+
+        <!--热门文章 start-->
+        <include file="public@side_article_hot"/>
+        <!--热门文章 end-->
+
+        <!--最新文章 start-->
+        <include file="public@side_article_new"/>
+        <!--最新文章 end-->
+
+        <!--<div class="widget widget_sentence">-->
+            <!--<a href="#" target="_blank" rel="nofollow" title="专业网站建设">-->
+                <!--<img style="width: 100%" src="__TMPL__/public/assets/images//201610241224221511.jpg" alt="专业网站建设"></a>-->
+        <!--</div>-->
+        <!--<div class="widget widget_sentence">-->
+            <!--<a href="#" target="_blank" rel="nofollow" title="MZ-NetBlog主题">-->
+                <!--<img style="width: 100%" src="__TMPL__/public/assets/images/ad.jpg" alt="MZ-NetBlog主题"></a>-->
+        <!--</div>-->
+        <include file="public@adver"/>
+    </aside>
+</section>
+
+<!--footer-->
+<include file="public@footer" />
+
+
+<include file="public@scripts"/>
+
+
+<script>
+    // next: '.pagination li:last',
+    jQuery.ias({
+        history: false,
+        container: '.content',
+        item: '.excerpt',
+        pagination: '.pagination',
+        next: '.pagination li:last a',
+        trigger: '查看更多',
+        loader: '<div class="pagination-loading"><img src="__TMPL__/public/assets/images/loading.gif" /></div>',
+        triggerPageThreshold: 5,
+        onRenderComplete: function (er) {
+            console.log('d', er)
+            $('.excerpt .thumb').lazyload({
+                placeholder: '__TMPL__/public/assets/images/occupying.png',
+                threshold: 300
+            });
+            $('.excerpt img').attr('draggable', 'false');
+            $('.excerpt a').attr('draggable', 'false')
+        },
+        onPageChange: function (pageNum, pageUrl, scrollOffset) {
+            console.log(pageNum);
+
+        }
+    });
+
+</script>
+
+</body>
+
+</html>

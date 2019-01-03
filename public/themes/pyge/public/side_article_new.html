@@ -1,0 +1,32 @@
+<!--文章列表-->
+<notempty name="$theme_widgets['article_new']">
+    <widget name="article_new">
+        <div class="widget widget_hot">
+            <h3>{$widget['title']}</h3>
+            <ul>
+                <portal:articles limit="$widget.vars.article_count"
+                                 categoryIds="$widget.vars.article_ids"
+                                 order="post.published_time DESC">
+                    <li>
+                        <a title="{$vo.post_title}" href="{:url('portal/Article/index',array('id'=>$vo.id,'cid'=>$vo['categories'][0]['id']))}">
+                            <span class="thumbnail">
+                                <empty name="vo.thumbnail">
+                                     <img class="thumb" src="__TMPL__/public/assets/images/occupying.png"
+                                          alt="{$vo.post_title}"
+                                          style="display: block;">
+                                    <else/>
+                                    <img class="thumb" src="{:cmf_get_image_url($vo.thumbnail)}"
+                                         alt="{$vo.post_title}" style="display: block;">
+                                </empty>
+                            </span>
+                            <span class="text">{$vo.post_title}</span>
+                            <span class="muted"><i class="glyphicon glyphicon-time"></i> {:date("Y-m-d",$vo.create_time)}</span>
+                            <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> {$vo.post_hits}</span>
+                        </a>
+                    </li>
+                </portal:articles>
+            </ul>
+        </div>
+
+    </widget>
+</notempty>

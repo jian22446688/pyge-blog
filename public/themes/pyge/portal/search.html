@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <title>搜索 {$keyword|default=''} {$site_info.site_name|default=''}</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <include file="public@head"/>
+</head>
+
+<body>
+
+<include file="public@nav"/>
+
+<section class="container cc-to-top-80px">
+    <div class="content-wrap">
+        <div class="content">
+            <!--文章列表-->
+            <div class="title">
+                <h3>"{$keyword}" 搜索结果</h3>
+            </div>
+            <php>
+                $where=[
+                    'post.create_time'=>['egt',0],
+                    'post.post_title'=>['like',"%$keyword%"]
+                ];
+                $page=[ 'list_rows'=>$theme_vars['pagination_count'], 'next'=>'下一页', 'prev'=>'上一页' ];
+            </php>
+            <portal:articles page="$page"
+                             where="$where"
+                             order="post.published_time DESC">
+                <article class="excerpt" style="">
+                    <a class="focus" href="{:cmf_url('portal/Article/index',['id'=>$vo.id])}" title="{$vo.post_title}" target="_blank">
+                        <empty name="vo.thumbnail">
+                            <img class="thumb" src="__TMPL__/public/assets/images/occupying.png"
+                                 alt="{$vo.post_title}" style="display: inline;">
+                            <else/>
+                            <img class="thumb" src="{:cmf_get_image_url($vo.thumbnail)}"
+                                 alt="{$vo.post_title}" style="display: inline;">
+                        </empty>
+                    </a>
+                    <header>
+                        <h2>
+                            <a href="{:cmf_url('portal/Article/index',['id'=>$vo.id])}" title="{$vo.post_title}" target="_blank">{$vo.post_title}</a>
+                        </h2>
+                    </header>
+                    <p class="meta">
+                        <time class="time"><i class="glyphicon glyphicon-time"></i> {:date("Y-m-d",$vo.create_time)}</time>
+                        <span class="views"><i class="glyphicon glyphicon-eye-open"></i> {$vo.post_hits}</span>
+                        <span class="comment"><i class="glyphicon glyphicon-thumbs-up"></i> {$vo.post_like}</span>
+                        <span class="comment"><i class="glyphicon glyphicon-comment"></i> {$vo.comment_count}</span>
+                    </p>
+                    <p class="note">{$vo.post_excerpt}</p>
+                </article>
+            </portal:articles>
+            <ul class="pagination" style="display: none;">
+                <page/>
+            </ul>
+
+        </div>
+    </div>
+
+    <aside class="sidebar">
+        <include file="public@adver"/>
+        <div class="widget widget_hot">
+            <h3>分类标签</h3>
+            <div class="widget-sentence-content">
+                <ul class="plinks ptags">
+                    <portal:categories item="vo">
+                        <li><a href="{:url('portal/List/index',array('id'=>$vo.id))}" title="{$vo.name}" draggable="false">{$vo.name}</a></li>
+                    </portal:categories>
+                </ul>
+            </div>
+        </div>
+
+        <!--热门文章 start-->
+        <include file="public@side_article_hot"/>
+        <!--热门文章 end-->
+
+        <!--<div class="widget widget_sentence">-->
+        <!--<a href="#" target="_blank" rel="nofollow" title="专业网站建设">-->
+        <!--<img style="width: 100%" src="__TMPL__/public/assets/images//201610241224221511.jpg" alt="专业网站建设"></a>-->
+        <!--</div>-->
+        <!--<div class="widget widget_sentence">-->
+        <!--<a href="#" target="_blank" rel="nofollow" title="MZ-NetBlog主题">-->
+        <!--<img style="width: 100%" src="__TMPL__/public/assets/images/ad.jpg" alt="MZ-NetBlog主题"></a>-->
+        <!--</div>-->
+        <include file="public@adver"/>
+    </aside>
+</section>
+
+<!--footer-->
+<include file="public@footer" />
+
+
+<include file="public@scripts"/>
+
+
+<script>
+    // next: '.pagination li:last',
+    jQuery.ias({
+        history: false,
+        container: '.content',
+        item: '.excerpt',
+        pagination: '.pagination',
+        next: '.pagination li:last a',
+        trigger: '查看更多',
+        loader: '<div class="pagination-loading"><img src="__TMPL__/public/assets/images/loading.gif" /></div>',
+        triggerPageThreshold: 5,
+        onRenderComplete: function (er) {
+            console.log('d', er)
+            $('.excerpt .thumb').lazyload({
+                placeholder: '__TMPL__/public/assets/images/occupying.png',
+                threshold: 300
+            });
+            $('.excerpt img').attr('draggable', 'false');
+            $('.excerpt a').attr('draggable', 'false')
+        },
+        onPageChange: function (pageNum, pageUrl, scrollOffset) {
+            console.log(pageNum);
+        }
+    });
+
+</script>
+
+</body>
+
+</html>

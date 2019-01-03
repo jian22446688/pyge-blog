@@ -1,0 +1,40 @@
+{
+    "name": "导航条",
+    "action": "public/Nav",
+    "description": "导航条模板文件",
+    "is_public": "1",
+    "order": 1.0,
+    "more": {
+        "vars": {
+            "footer_links_title": {
+                "title": "通用底部-友情连接标题",
+                "value": "申请友链",
+                "type": "text",
+                "tip": "请输入友情连接标题",
+                "rule": {
+                    "require": true
+                },
+                "message":{
+                    "require":"友情连接标题不能为空"
+                }
+            },
+            "footer_links_page": {
+                "title": "通用底部-申请友链",
+                "value": "1",
+                "type": "text",
+                "tip": "请输入申请友链",
+                "dataSource":{
+                    "api": "portal/Page/index",
+                    "multi": false
+                },
+                "rule": {
+                    "require": true
+                },
+                "message":{
+                    "require":"申请友链不能为空"
+                }
+            }
+        }
+
+    }
+}

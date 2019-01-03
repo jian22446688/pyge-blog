@@ -1,0 +1,106 @@
+<header class="header">
+    <nav class="navbar navbar-default cc-nav-fixed" id="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#header-navbar" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h1 class="logo hvr-bounce-in">
+                    <a href="__ROOT__/" title="木庄网络博客">
+                        <img class="cc-margin-b-7" src="{$theme_vars['logo_img']|cmf_get_image_url}" alt="木庄网络博客">
+                    </a>
+                </h1>
+            </div>
+            <div class="collapse navbar-collapse" id="header-navbar">
+                <ul id="main-menu" class="nav navbar-nav navbar-right">
+                    <navigation nav-id="" root="">
+                        <navigationMenu>
+                            <if condition="$level gt 1">
+                                <li class="menu-item menu-item-level-{$level} levelgt1">
+                                    <a href="{$menu.href|default=''}" target="{$menu.target|default=''}">
+                                        {$menu.name|default=''}
+                                    </a>
+                                </li>
+                                <else/>
+                                <li class="menu-item menu-item-level-{$level}">
+                                    <a href="{$menu.href|default=''}" target="{$menu.target|default=''}">
+                                        {$menu.name|default=''}
+                                    </a>
+                                </li>
+                            </if>
+                        </navigationMenu>
+                        <navigationFolder root="li" class="dropdown dropdown-custom dropdown-custom-level-{$level}">
+                            <a href="javascript:" class="dropdown-toggle dropdown-toggle-{$level}" data-toggle="dropdown">
+                                {$menu.name|default=''}<span class="caret"></span>
+                            </a>
+                        </navigationFolder>
+                    </navigation>
+                    <li>
+                        <form class="navbar-form navbar-left cc-navbar-form-search"
+                              method="POST" action="{:cmf_url('portal/Search/index')}">
+                            <div class="form-group">
+                                <input style="vertical-align: unset; line-height: unset"
+                                        type="text"
+                                       name="keyword"
+                                       class="form-control"
+                                       placeholder="请输入关键字"
+                                       value="{:input('param.keyword','')}"
+                                       maxlength="15"
+                                       autocomplete="off">
+                            </div>
+                            <button type="submit" class="btn btn-default btn-search">搜索</button>
+                        </form>
+                    </li>
+                    <!--<li role="presentation" class="dropdown user login">-->
+                        <!--<a class="dropdown-toggle user" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">-->
+                            <!--<span class="glyphicon glyphicon-user" aria-hidden="true"></span>-->
+                            <!--用户<span class="caret"></span>-->
+                        <!--</a>-->
+
+                        <!--<ul class="dropdown-menu">-->
+                            <!--<li><a href="#">登陆</a></li>-->
+                            <!--<li><a href="#">注册</a></li>-->
+                            <!--<li role="separator" class="divider"></li>-->
+                            <!--<li><a href="__ROOT__/cabout.html">关于</a></li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
+
+                    <li class="dropdown user login" >
+                        <a class="dropdown-toggle user" data-toggle="dropdown" href="#">
+                            <php>$user=cmf_get_current_user();</php>
+                            <if condition="empty($user['avatar'])">
+                                <img src="__TMPL__/public/assets/images/headicon.png" class="headicon">
+                                <else/>
+                                <img src="{:cmf_get_user_avatar_url($user['avatar'])}" class="headicon" width="30"/>
+                            </if>
+                            <span class="user-nickname"></span><b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="{:cmf_url('user/Profile/center')}">个人中心</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{:cmf_url('user/Index/logout')}">退出</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown user offline" style="display: none; ">
+                        <a class="dropdown-toggle user" data-toggle="dropdown" href="#">
+                            <img src="__TMPL__/public/assets/images/headicon.png" class="headicon">
+                            登录<b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="{:cmf_url('user/Login/index')}"></i>登录</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{:cmf_url('user/Register/index')}">注册</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+
+    </nav>
+</header>

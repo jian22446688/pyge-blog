@@ -1,0 +1,23 @@
+<footer class="footer">
+    <div class="container">
+        <div id="links">
+            <ul class="linkcat">
+                <li><strong>友情链接：</strong></li>
+                <links>
+                    <li><a href="{$vo.url|default='#'}"
+                           title="{$vo.description|default=''}"
+                           target="{$vo.target|default=''}">{$vo.name|default=''}</a></li>
+                </links>
+                <li><a href="{:cmf_url('portal/page/index', array('id'=>$theme_vars.footer_links_page))}"
+                       target="_blank" style="color:#00a0e9;">{$theme_vars.footer_links_title|default=''}</a></li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="container copyright">
+        <p>本站[破影阁]的部分内容来源于网络，若侵犯到您的利益，请联系站长删除！谢谢！ Copyright &copy; 2018 cary
+            <a href="__ROOT__/" title="{$site_info.site_name|default=''}">{$site_info.site_name|default=''}</a>
+        </p>
+    </div>
+    <div id="gotop"><a class="gotop"></a></div>
+</footer>
